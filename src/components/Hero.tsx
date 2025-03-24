@@ -36,10 +36,10 @@ const Hero = () => {
   return (
     <div className="relative h-screen overflow-hidden">
       {/* Background Image with Overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background/90 z-10 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}></div>
+      <div className={`absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background/90 z-10 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}></div>
       <div
         ref={heroRef}
-        className={`absolute inset-0 bg-[url('/lovable-uploads/785d7e95-5160-4110-b49c-2067714ea05f.png')] bg-cover bg-center transition-transform duration-1000 ${isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'}`}
+        className={`absolute inset-0 bg-[url('/lovable-uploads/243a34e2-360c-4a08-85bd-7fba5f5aba54.png')] bg-cover bg-center transition-transform duration-1000 ${isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'}`}
       ></div>
       
       {/* Content */}
