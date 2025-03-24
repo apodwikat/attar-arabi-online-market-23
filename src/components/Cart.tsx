@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { MessageCircle, Plus, Minus, Trash2 } from 'lucide-react';
+import { WhatsApp, Plus, Minus, Trash2 } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -67,6 +67,7 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
     message += `\n*المجموع الفرعي:* ₪${subtotal}`;
     message += `\n*رسوم التوصيل (${selectedArea}):* ₪${deliveryCost}`;
     message += `\n*المجموع الكلي:* ₪${total}`;
+    message += `\n\n*العنوان:* نابلس، فلسطين`;
     
     // Create WhatsApp URL with correct number
     const phoneNumber = "970597167176";
@@ -187,7 +188,7 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
               className="w-full gap-2"
               onClick={handleCheckout}
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsApp className="h-5 w-5" />
               <span>إتمام الطلب عبر واتساب</span>
             </Button>
             

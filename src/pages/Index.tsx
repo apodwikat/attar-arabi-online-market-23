@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -7,7 +8,7 @@ import DonationSection from '@/components/DonationSection';
 import { Product } from '@/components/ProductCard';
 import Cart from '@/components/Cart';
 import { Button } from '@/components/ui/button';
-import { ChevronUp, Facebook, Instagram, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
+import { ChevronUp, Facebook, Instagram, Phone, Mail, WhatsApp, MapPin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 
@@ -99,6 +100,7 @@ const Index = () => {
                    `*المنتج:* ${product.name}\n` +
                    `*السعر:* ₪${product.price}\n` +
                    `*الوزن:* ${product.weight}\n\n` +
+                   `*العنوان:* نابلس، فلسطين\n\n` +
                    `أرغب بطلب هذا المنتج. الرجاء تزويدي بالتفاصيل.`;
     
     const phoneNumber = "970597167176";
@@ -185,7 +187,7 @@ const Index = () => {
                       </div>
                       <div>
                         <p className="text-sm text-foreground/70">العنوان</p>
-                        <p className="font-medium">رام الله، فلسطين</p>
+                        <p className="font-medium">نابلس، فلسطين</p>
                       </div>
                     </div>
                   </div>
@@ -216,14 +218,14 @@ const Index = () => {
                       rel="noopener noreferrer"
                       className="h-10 w-10 rounded-full bg-[#25D366]/10 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors"
                     >
-                      <MessageCircle className="h-5 w-5 text-[#25D366]" />
+                      <WhatsApp className="h-5 w-5 text-[#25D366]" />
                     </a>
                   </div>
                 </div>
                 
                 <div className="glass-card rounded-xl overflow-hidden h-[300px] md:h-auto">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27130.995192042245!2d35.17967444647731!3d31.90298703562946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502d40a170c30b9%3A0xfeef58b7a4b5a2d9!2sRamallah!5e0!3m2!1sen!2s!4v1711304387994!5m2!1sen!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27086.00030442342!2d35.25372003955077!3d32.22306499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ce0f450061f8b%3A0x5f3cc4e80f31cea3!2sNablus!5e0!3m2!1sen!2sus!4v1711312929815!5m2!1sen!2sus"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -255,7 +257,7 @@ const Index = () => {
                 <Instagram className="h-5 w-5" />
               </a>
               <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary">
-                <MessageCircle className="h-5 w-5" />
+                <WhatsApp className="h-5 w-5" />
               </a>
             </div>
             

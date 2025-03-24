@@ -33,7 +33,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-background/90 z-10"></div>
       <div
         ref={heroRef}
-        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1481814930803-87a2008136fe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center"
+        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=2070')] bg-cover bg-center"
       ></div>
       
       {/* Content */}
