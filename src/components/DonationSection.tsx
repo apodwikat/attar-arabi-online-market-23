@@ -1,13 +1,11 @@
-
 import React, { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, ArrowLeft } from 'lucide-react';
+import { Heart, ArrowLeft, MessageCircle } from 'lucide-react';
 
 const DonationSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   
-  // Animate on scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -32,18 +30,14 @@ const DonationSection = () => {
     };
   }, []);
   
-  // Handle donation via WhatsApp
   const handleDonation = (packageType: string) => {
-    // Format donation message
     const message = `🤲 *طلب تبرع من العطار العربي* 🤲\n\n` +
                    `أرغب بالتبرع بـ ${packageType} لصالح العائلات المحتاجة. الرجاء تزويدي بالتفاصيل.`;
     
-    // WhatsApp number (using the correct number)
     const phoneNumber = "970597167176";
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
-    // Open WhatsApp in a new tab
     window.open(whatsappUrl, "_blank");
   };
 
@@ -53,7 +47,6 @@ const DonationSection = () => {
       ref={sectionRef}
       className="py-20 relative overflow-hidden bg-gradient-to-br from-secondary/5 to-primary/5"
     >
-      {/* Background Elements */}
       <div className="absolute top-20 left-20 w-60 h-60 rounded-full bg-secondary/10 blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-primary/10 blur-3xl"></div>
       
@@ -70,9 +63,7 @@ const DonationSection = () => {
             </p>
           </div>
           
-          {/* Donation Packages */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* Package 1 */}
             <div className="glass-card rounded-xl overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
               <div className="bg-primary/10 p-4 text-center">
                 <h3 className="font-bold text-xl">باقة أساسية</h3>
@@ -105,7 +96,6 @@ const DonationSection = () => {
               </div>
             </div>
             
-            {/* Package 2 */}
             <div className="glass-card rounded-xl overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-secondary">
               <div className="bg-secondary text-white p-4 text-center">
                 <h3 className="font-bold text-xl">باقة متوسطة</h3>
@@ -142,7 +132,6 @@ const DonationSection = () => {
               </div>
             </div>
             
-            {/* Package 3 */}
             <div className="glass-card rounded-xl overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
               <div className="bg-primary/10 p-4 text-center">
                 <h3 className="font-bold text-xl">باقة مميزة</h3>
@@ -184,7 +173,6 @@ const DonationSection = () => {
             </div>
           </div>
           
-          {/* Custom Donation */}
           <div className="text-center mt-10">
             <p className="text-foreground/80 mb-4">
               يمكنك أيضاً التبرع بقيمة مخصصة أو منتجات محددة

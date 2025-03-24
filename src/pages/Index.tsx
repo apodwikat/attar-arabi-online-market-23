@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -8,7 +7,7 @@ import DonationSection from '@/components/DonationSection';
 import { Product } from '@/components/ProductCard';
 import Cart from '@/components/Cart';
 import { Button } from '@/components/ui/button';
-import { ChevronUp, Facebook, Instagram, Phone, Mail, WhatsApp, MapPin } from 'lucide-react';
+import { ChevronUp, Facebook, Instagram, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 
@@ -218,7 +217,7 @@ const Index = () => {
                       rel="noopener noreferrer"
                       className="h-10 w-10 rounded-full bg-[#25D366]/10 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors"
                     >
-                      <WhatsApp className="h-5 w-5 text-[#25D366]" />
+                      <MessageCircle className="h-5 w-5 text-[#25D366]" />
                     </a>
                   </div>
                 </div>
@@ -257,7 +256,7 @@ const Index = () => {
                 <Instagram className="h-5 w-5" />
               </a>
               <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary">
-                <WhatsApp className="h-5 w-5" />
+                <MessageCircle className="h-5 w-5" />
               </a>
             </div>
             

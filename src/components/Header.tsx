@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, User, Menu, X, Facebook, Instagram, WhatsApp } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useLocation, Link } from 'react-router-dom';
@@ -93,7 +93,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
               <Instagram size={18} />
             </a>
             <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="واتساب">
-              <WhatsApp size={18} />
+              <MessageCircle size={18} />
             </a>
           </div>
           
@@ -184,7 +184,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
                 <Instagram size={20} />
               </a>
               <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary" aria-label="واتساب">
-                <WhatsApp size={20} />
+                <MessageCircle size={20} />
               </a>
             </div>
           </div>
