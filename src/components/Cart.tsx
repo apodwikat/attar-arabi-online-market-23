@@ -68,8 +68,8 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
     message += `\n*رسوم التوصيل (${selectedArea}):* ₪${deliveryCost}`;
     message += `\n*المجموع الكلي:* ₪${total}`;
     
-    // Create WhatsApp URL
-    const phoneNumber = "972123456789"; // Replace with actual WhatsApp number
+    // Create WhatsApp URL with correct number
+    const phoneNumber = "970597167176";
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     

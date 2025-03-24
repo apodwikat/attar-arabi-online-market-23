@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -12,11 +11,16 @@ import { ChevronUp, Facebook, Instagram, Phone, Mail, MessageCircle, MapPin } fr
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 
+const socialLinks = {
+  facebook: "https://www.facebook.com/alattararabi",
+  instagram: "https://www.instagram.com/alatar_alarabi/?igsh=MTh4YnlxMjdzOTc4Mw%3D%3D#",
+  whatsapp: "https://wa.me/970597167176"
+};
+
 const Index = () => {
   const [cartItems, setCartItems] = useState<(Product & { quantity: number })[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // Check if should show scroll to top button
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 600);
@@ -26,7 +30,6 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Load cart from localStorage on component mount
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -38,26 +41,21 @@ const Index = () => {
     }
   }, []);
   
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
   
-  // Add product to cart
   const handleAddToCart = (product: Product) => {
     setCartItems(prev => {
-      // Check if product already exists in cart
       const existingItem = prev.find(item => item.id === product.id);
       
       if (existingItem) {
-        // If exists, increment quantity
         return prev.map(item => 
           item.id === product.id 
             ? { ...item, quantity: item.quantity + 1 } 
             : item
         );
       } else {
-        // If not, add new item with quantity 1
         return [...prev, { ...product, quantity: 1 }];
       }
     });
@@ -68,7 +66,6 @@ const Index = () => {
     });
   };
   
-  // Update item quantity in cart
   const handleUpdateQuantity = (productId: number, quantity: number) => {
     setCartItems(prev => 
       prev.map(item => 
@@ -79,7 +76,6 @@ const Index = () => {
     );
   };
   
-  // Remove item from cart
   const handleRemoveItem = (productId: number) => {
     setCartItems(prev => prev.filter(item => item.id !== productId));
     
@@ -89,7 +85,6 @@ const Index = () => {
     });
   };
   
-  // Clear cart
   const handleClearCart = () => {
     setCartItems([]);
     
@@ -99,25 +94,20 @@ const Index = () => {
     });
   };
   
-  // Order single product via WhatsApp
   const handleOrderNow = (product: Product) => {
-    // Format order message
     const message = `🛒 *طلب منتج من العطار العربي* 🛒\n\n` +
                    `*المنتج:* ${product.name}\n` +
                    `*السعر:* ₪${product.price}\n` +
                    `*الوزن:* ${product.weight}\n\n` +
                    `أرغب بطلب هذا المنتج. الرجاء تزويدي بالتفاصيل.`;
     
-    // WhatsApp number (replace with actual number)
-    const phoneNumber = "972123456789";
+    const phoneNumber = "970597167176";
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
-    // Open WhatsApp in a new tab
     window.open(whatsappUrl, "_blank");
   };
   
-  // Scroll to top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -137,7 +127,6 @@ const Index = () => {
           onOrderNow={handleOrderNow} 
         />
         
-        {/* Cart Section */}
         <section id="cart" className="py-20 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="max-w-xl mx-auto">
@@ -153,7 +142,6 @@ const Index = () => {
         
         <DonationSection />
         
-        {/* Contact Section */}
         <section id="contact" className="py-20 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -166,7 +154,6 @@ const Index = () => {
             
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Contact Info */}
                 <div className="glass-card rounded-xl p-6">
                   <h3 className="text-xl font-bold mb-6">معلومات التواصل</h3>
                   
@@ -176,8 +163,9 @@ const Index = () => {
                         <Phone className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm text-foreground/70">رقم الهاتف</p>
-                        <p className="font-medium">+972 12 345 6789</p>
+                        <p className="text-sm text-foreground/70">أرقام الهاتف</p>
+                        <p className="font-medium">970597167176+</p>
+                        <p className="font-medium">0543655351</p>
                       </div>
                     </div>
                     
@@ -207,19 +195,25 @@ const Index = () => {
                   <h3 className="text-xl font-bold mb-4">تابعنا على</h3>
                   <div className="flex items-center gap-4">
                     <a
-                      href="#"
+                      href={socialLinks.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="h-10 w-10 rounded-full bg-[#1877F2]/10 flex items-center justify-center hover:bg-[#1877F2]/20 transition-colors"
                     >
                       <Facebook className="h-5 w-5 text-[#1877F2]" />
                     </a>
                     <a
-                      href="#"
+                      href={socialLinks.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="h-10 w-10 rounded-full bg-[#E4405F]/10 flex items-center justify-center hover:bg-[#E4405F]/20 transition-colors"
                     >
                       <Instagram className="h-5 w-5 text-[#E4405F]" />
                     </a>
                     <a
-                      href="#"
+                      href={socialLinks.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="h-10 w-10 rounded-full bg-[#25D366]/10 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors"
                     >
                       <MessageCircle className="h-5 w-5 text-[#25D366]" />
@@ -227,7 +221,6 @@ const Index = () => {
                   </div>
                 </div>
                 
-                {/* Google Map */}
                 <div className="glass-card rounded-xl overflow-hidden h-[300px] md:h-auto">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27130.995192042245!2d35.17967444647731!3d31.90298703562946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502d40a170c30b9%3A0xfeef58b7a4b5a2d9!2sRamallah!5e0!3m2!1sen!2s!4v1711304387994!5m2!1sen!2s"
@@ -246,23 +239,22 @@ const Index = () => {
         </section>
       </main>
       
-      {/* Footer */}
       <footer className="bg-gradient-to-r from-primary/5 to-secondary/5 py-10">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-primary mb-4">العطار العربي</h2>
             <p className="text-foreground/70 max-w-xl mx-auto mb-6">
-              منتجات غذائية تقليدية عربية أصيلة، مصنوعة بحب واهتمام للحفاظ على أصالة المذاق وجودة المكونات.
+              منتجات غذائية تقليدية فلسطينية أصيلة، مصنوعة بحب واهتمام للحفاظ على أصالة المذاق وجودة المكونات.
             </p>
             
             <div className="flex justify-center gap-6 mb-6">
-              <a href="#" className="text-foreground/70 hover:text-primary">
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-foreground/70 hover:text-primary">
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-foreground/70 hover:text-primary">
+              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary">
                 <MessageCircle className="h-5 w-5" />
               </a>
             </div>
@@ -276,7 +268,6 @@ const Index = () => {
         </div>
       </footer>
       
-      {/* Scroll to Top Button */}
       {showScrollTop && (
         <button
           className="fixed bottom-6 right-6 h-10 w-10 rounded-full bg-primary text-foreground flex items-center justify-center shadow-lg transition-all hover:-translate-y-1 z-50"

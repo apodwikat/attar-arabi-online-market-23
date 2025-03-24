@@ -38,8 +38,8 @@ const DonationSection = () => {
     const message = `🤲 *طلب تبرع من العطار العربي* 🤲\n\n` +
                    `أرغب بالتبرع بـ ${packageType} لصالح العائلات المحتاجة. الرجاء تزويدي بالتفاصيل.`;
     
-    // WhatsApp number (replace with actual number)
-    const phoneNumber = "972123456789";
+    // WhatsApp number (using the correct number)
+    const phoneNumber = "970597167176";
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     

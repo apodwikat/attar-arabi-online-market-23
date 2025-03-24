@@ -19,6 +19,13 @@ const navItems: NavItem[] = [
   { name: 'اتصل بنا', href: '#contact' },
 ];
 
+// Social media links
+const socialLinks = {
+  facebook: "https://www.facebook.com/alattararabi",
+  instagram: "https://www.instagram.com/alatar_alarabi/?igsh=MTh4YnlxMjdzOTc4Mw%3D%3D#",
+  whatsapp: "https://wa.me/970597167176"
+};
+
 const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -79,13 +86,13 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         <div className="flex items-center gap-3 flex-1 justify-end">
           {/* Social Icons */}
           <div className="hidden md:flex items-center gap-2">
-            <a href="#" className="text-foreground/70 hover:text-primary transition-all" aria-label="فيسبوك">
+            <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="فيسبوك">
               <Facebook size={18} />
             </a>
-            <a href="#" className="text-foreground/70 hover:text-primary transition-all" aria-label="انستغرام">
+            <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="انستغرام">
               <Instagram size={18} />
             </a>
-            <a href="#" className="text-foreground/70 hover:text-primary transition-all" aria-label="واتساب">
+            <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="واتساب">
               <MessageCircle size={18} />
             </a>
           </div>
@@ -170,13 +177,13 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
             <div className="h-px bg-border my-2"></div>
             
             <div className="flex justify-center gap-6 py-2">
-              <a href="#" className="text-foreground/70 hover:text-primary" aria-label="فيسبوك">
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary" aria-label="فيسبوك">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-foreground/70 hover:text-primary" aria-label="انستغرام">
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary" aria-label="انستغرام">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-foreground/70 hover:text-primary" aria-label="واتساب">
+              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary" aria-label="واتساب">
                 <MessageCircle size={20} />
               </a>
             </div>
