@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronUp, Facebook, Instagram, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
+import LoginModal from '@/components/LoginModal';
 
 const socialLinks = {
   facebook: "https://www.facebook.com/alattararabi",
@@ -20,6 +22,7 @@ const socialLinks = {
 const Index = () => {
   const [cartItems, setCartItems] = useState<(Product & { quantity: number })[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -278,6 +281,9 @@ const Index = () => {
           <ChevronUp className="h-6 w-6" />
         </button>
       )}
+      
+      {/* Login Modal */}
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </div>
   );
 };

@@ -6,10 +6,12 @@ import { Product } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { ChevronUp } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import LoginModal from '@/components/LoginModal';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<(Product & { quantity: number })[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -121,6 +123,9 @@ const CartPage = () => {
           <ChevronUp className="h-6 w-6" />
         </button>
       )}
+      
+      {/* Login Modal */}
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </div>
   );
 };

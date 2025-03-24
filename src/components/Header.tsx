@@ -12,11 +12,11 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { name: 'من نحن', href: '#about' },
-  { name: 'منتجاتنا', href: '#products' },
-  { name: 'العروض الخاصة', href: '#offers' },
-  { name: 'التبرع', href: '#donation' },
-  { name: 'اتصل بنا', href: '#contact' },
+  { name: 'من نحن', href: '/#about' },
+  { name: 'منتجاتنا', href: '/#products' },
+  { name: 'العروض الخاصة', href: '/#offers' },
+  { name: 'التبرع', href: '/#donation' },
+  { name: 'اتصل بنا', href: '/#contact' },
 ];
 
 // Social media links
@@ -29,6 +29,7 @@ const socialLinks = {
 const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   
   // Handle scroll effect
   useEffect(() => {
@@ -71,14 +72,14 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
+              to={item.href}
               className="text-foreground/80 hover:text-primary font-medium transition-all relative group"
             >
               {item.name}
               <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-            </a>
+            </Link>
           ))}
         </nav>
         
@@ -109,11 +110,21 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
                 )}
               </Button>
             </Link>
-            <Button variant="outline" size="sm" className="hidden md:flex gap-2 items-center">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="hidden md:flex gap-2 items-center"
+              onClick={() => alert("ميزة تسجيل الدخول قيد التطوير")}
+            >
               <User className="h-4 w-4" />
               <span>تسجيل الدخول</span>
             </Button>
-            <Button variant="default" size="sm" className="hidden md:inline-flex">
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="hidden md:inline-flex"
+              onClick={() => alert("ميزة إنشاء حساب قيد التطوير")}
+            >
               إنشاء حساب
             </Button>
             
@@ -153,24 +164,38 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
           
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="py-2 px-3 rounded-md hover:bg-muted transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
             
             <div className="h-px bg-border my-2"></div>
             
-            <Button variant="outline" className="w-full justify-center gap-2">
+            <Button 
+              variant="outline" 
+              className="w-full justify-center gap-2"
+              onClick={() => {
+                alert("ميزة تسجيل الدخول قيد التطوير");
+                setIsMobileMenuOpen(false);
+              }}
+            >
               <User className="h-4 w-4" />
               <span>تسجيل الدخول</span>
             </Button>
             
-            <Button variant="default" className="w-full justify-center">
+            <Button 
+              variant="default" 
+              className="w-full justify-center"
+              onClick={() => {
+                alert("ميزة إنشاء حساب قيد التطوير");
+                setIsMobileMenuOpen(false);
+              }}
+            >
               إنشاء حساب
             </Button>
             
