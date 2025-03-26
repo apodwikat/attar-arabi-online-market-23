@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
+import { useLocation } from 'react-router-dom';
 
 interface CartProps {
   items: (Product & { quantity: number })[];
@@ -30,6 +31,7 @@ const deliveryAreas = [
 const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps) => {
   const [selectedArea, setSelectedArea] = useState(deliveryAreas[0].name);
   const [deliveryCost, setDeliveryCost] = useState(deliveryAreas[0].cost);
+  const location = useLocation();
   
   // Update delivery cost when area changes
   useEffect(() => {
@@ -44,6 +46,20 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
   
   // Calculate total with delivery
   const total = subtotal + deliveryCost;
+  
+  // Handle browse products button click
+  const handleBrowseProductsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (location.pathname !== '/') {
+      window.location.href = '/#products';
+    } else {
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
   
   // Handle checkout via WhatsApp
   const handleCheckout = () => {
@@ -207,7 +223,7 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
           <Button
             variant="link"
             className="text-primary"
-            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={handleBrowseProductsClick}
           >
             تصفح المنتجات
           </Button>

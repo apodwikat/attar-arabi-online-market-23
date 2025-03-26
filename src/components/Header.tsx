@@ -54,6 +54,25 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
 
+  // Scroll to section function
+  const scrollToSection = (sectionId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      window.location.href = sectionId;
+      return;
+    }
+    
+    // Get element and scroll to it
+    const element = document.getElementById(sectionId.replace('#', ''));
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      // Close mobile menu if open
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
     <header className={cn(
       "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
@@ -72,14 +91,15 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.name}
-              to={item.href}
+              href={item.href}
+              onClick={(e) => scrollToSection(item.href, e)}
               className="text-foreground/80 hover:text-primary font-medium transition-all relative group"
             >
               {item.name}
               <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-            </Link>
+            </a>
           ))}
         </nav>
         
@@ -164,14 +184,14 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
           
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.name}
-                to={item.href}
+                href={item.href}
                 className="py-2 px-3 rounded-md hover:bg-muted transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => scrollToSection(item.href, e)}
               >
                 {item.name}
-              </Link>
+              </a>
             ))}
             
             <div className="h-px bg-border my-2"></div>

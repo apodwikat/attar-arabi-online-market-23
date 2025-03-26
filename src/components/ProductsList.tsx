@@ -6,62 +6,181 @@ import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Sample products data
+// Products data with the new categories and items
 const productsData: Product[] = [
+  // فئة: الأجبان و الألبان
   {
     id: 1,
-    name: 'عسل طبيعي صافي',
-    description: 'عسل طبيعي 100% من جبال فلسطين، مذاق رائع وفوائد صحية عديدة',
-    price: 200,
+    name: 'واحد كيلو جبنة نعاج',
+    description: 'جبنة نعاج طازجة وأصلية، محضرة بطريقة تقليدية',
+    price: 25,
     weight: '1 كجم',
-    image: 'https://images.unsplash.com/photo-1587049352851-8d4e89133924?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'العسل'
+    image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
   {
     id: 2,
-    name: 'عسل مع شمع',
-    description: 'عسل طبيعي بشمع العسل الأصلي، غني بالفوائد والعناصر الغذائية',
-    price: 100,
-    weight: '500 جم',
-    image: 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'العسل'
+    name: 'لبنة مع زيت زيتون',
+    description: 'لبنة طازجة مع زيت زيتون فلسطيني أصلي',
+    price: 30,
+    weight: '850 غرام',
+    image: 'https://images.unsplash.com/photo-1559561853-08451507cbe7?q=80&w=2034&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
   {
     id: 3,
-    name: 'مكدوس باذنجان',
-    description: 'مكدوس باذنجان بزيت الزيتون والجوز، محضر بطريقة تقليدية',
+    name: 'سمن بلدي',
+    description: 'سمن بلدي أصلي، محضر بطريقة تقليدية',
     price: 30,
-    weight: '1 كجم',
-    image: 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'المكدوس'
+    weight: 'نصف كيلو',
+    image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
   {
     id: 4,
-    name: 'جبنة بلدية',
-    description: 'جبنة بلدية طازجة، صناعة محلية بطريقة تقليدية',
+    name: 'كيلو جميد بلدي',
+    description: 'جميد بلدي أصلي، مصنوع من حليب الأغنام',
     price: 50,
-    weight: '500 جم',
-    image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?q=80&w=2533&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'الأجبان والألبان'
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1624979641604-1e7b013e1563?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
   {
     id: 5,
-    name: 'عرض خاص: عسل + مكدوس',
-    description: 'عرض مميز يشمل 1 كجم عسل طبيعي + 1 كجم مكدوس باذنجان',
-    price: 150,
-    weight: '2 كجم',
-    image: 'https://images.unsplash.com/photo-1587049352851-8d4e89133924?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'العروض الخاصة'
+    name: 'سمن بلدي',
+    description: 'سمن بلدي أصلي، عبوة صغيرة مناسبة للتجربة',
+    price: 25,
+    weight: '20 غرام',
+    image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
   {
     id: 6,
-    name: 'لبنة بلدية',
-    description: 'لبنة بلدية طازجة، غنية بالبروبيوتيك ومفيدة للصحة',
-    price: 45,
-    weight: '500 جم',
-    image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?q=80&w=2533&auto=format&fit=crop&ixlib=rb-4.0.3',
-    category: 'الأجبان والألبان'
+    name: 'سمنة البقرة الحلوب',
+    description: 'سمنة البقرة الحلوب الأصلية، غنية بالفيتامينات والعناصر المفيدة',
+    price: 35,
+    weight: 'نصف كيلو',
+    image: 'https://images.unsplash.com/photo-1628268909376-e8c9ed996fb0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الأجبان و الألبان'
   },
+  
+  // فئة: المكدوس
+  {
+    id: 7,
+    name: 'كيلو مكدوس بالزيت والجوز',
+    description: 'مكدوس باذنجان محشو بالجوز والفلفل والثوم، محفوظ بزيت زيتون فلسطيني أصلي',
+    price: 25,
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1601117596595-ef03ac66df7f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'المكدوس'
+  },
+  
+  // فئة: العسل
+  {
+    id: 8,
+    name: 'كيلو عسل سدر أصلي',
+    description: 'عسل سدر طبيعي 100%، مذاق رائع وفوائد صحية عديدة',
+    price: 100,
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1587049352851-8d4e89133924?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'العسل'
+  },
+  
+  // فئة: بهارات ومكسرات
+  {
+    id: 9,
+    name: 'كيلو لوز مبشور (رباع أو نصاص)',
+    description: 'لوز مبشور طازج، يمكن اختيار الحجم المناسب (رباع أو نصاص)',
+    price: 50,
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1614398342600-d4df717638cc?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'بهارات ومكسرات'
+  },
+  {
+    id: 10,
+    name: 'شوربة بنكهة الدجاج',
+    description: 'شوربة لذيذة بنكهة الدجاج، سهلة التحضير ومناسبة للعائلة',
+    price: 100,
+    weight: '800 غرام',
+    image: 'https://images.unsplash.com/photo-1584949602334-4e99f98286a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'بهارات ومكسرات'
+  },
+  {
+    id: 11,
+    name: 'طحين اللوز',
+    description: 'طحين لوز طازج، مناسب للحلويات والأطباق الخاصة',
+    price: 25,
+    weight: 'نصف كيلو',
+    image: 'https://images.unsplash.com/photo-1621955964441-c173e01c135b?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'بهارات ومكسرات'
+  },
+  
+  // فئة: المخللات
+  {
+    id: 12,
+    name: 'مخلل خيار بيبي',
+    description: 'مخلل خيار بيبي لذيذ، محضر بطريقة تقليدية',
+    price: 15,
+    weight: '1 لتر',
+    image: 'https://images.unsplash.com/photo-1593488297625-334526856181?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'المخللات'
+  },
+  {
+    id: 13,
+    name: 'مخلل فقوس بلدي',
+    description: 'مخلل فقوس بلدي أصلي، محضر بطريقة تقليدية',
+    price: 15,
+    weight: '1 لتر',
+    image: 'https://images.unsplash.com/photo-1521473585104-7e5f0512afeb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'المخللات'
+  },
+  
+  // فئة: الشطة
+  {
+    id: 14,
+    name: 'هالبينو بزيت الزيتون',
+    description: 'فلفل هالبينو حار محفوظ بزيت الزيتون الفلسطيني الأصلي',
+    price: 20,
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1642728665846-a4efd4919099?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الشطة'
+  },
+  {
+    id: 15,
+    name: 'تغميسة العطار (سلطة فلفل)',
+    description: 'سلطة فلفل خاصة، وصفة العطار السرية اللذيذة',
+    price: 20,
+    weight: '1 كجم',
+    image: 'https://images.unsplash.com/photo-1670421825030-8f8fd79db279?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الشطة'
+  },
+  {
+    id: 16,
+    name: 'شطة حمرة حارة',
+    description: 'شطة حمراء حارة، مناسبة للأطباق المتنوعة',
+    price: 15,
+    weight: '1 لتر',
+    image: 'https://images.unsplash.com/photo-1635270256858-2854398348d9?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الشطة'
+  },
+  {
+    id: 17,
+    name: 'شطة خضرة حارة',
+    description: 'شطة خضراء حارة، نكهة مميزة ومذاق رائع',
+    price: 15,
+    weight: '1 لتر',
+    image: 'https://images.unsplash.com/photo-1635619061839-a615e3d9ef76?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الشطة'
+  },
+  {
+    id: 18,
+    name: 'دبس فلفل حار',
+    description: 'دبس فلفل حار مركز، يضيف نكهة مميزة للأطباق',
+    price: 20,
+    weight: 'نصف كيلو',
+    image: 'https://images.unsplash.com/photo-1607919947372-fe395f92951e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3',
+    category: 'الشطة'
+  }
 ];
 
 // Get unique categories from products
