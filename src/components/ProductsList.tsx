@@ -1,10 +1,11 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import ProductCard, { Product } from './ProductCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Badge } from '@/components/ui/badge';
 
 // Products data with the new categories and items
 const productsData: Product[] = [
@@ -30,7 +31,7 @@ const productsData: Product[] = [
   {
     id: 3,
     name: 'سمن بلدي',
-    description: 'سمن بلدي أصلي، محضر بطريقة تقليدية',
+    description: 'سمن بلدي أصلي، محضرة بطريقة تقليدية',
     price: 30,
     weight: 'نصف كيلو',
     image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3',
@@ -115,7 +116,7 @@ const productsData: Product[] = [
     category: 'بهارات ومكسرات'
   },
   
-  // فئة: المخللات - تصحيح الربط بوضع category صحيح
+  // فئة: المخللات
   {
     id: 12,
     name: 'مخلل خيار بيبي',
@@ -135,7 +136,7 @@ const productsData: Product[] = [
     category: 'المخللات'
   },
   
-  // فئة: الشطة - تصحيح الربط بوضع category صحيح
+  // فئة: الشطة
   {
     id: 14,
     name: 'هالبينو بزيت الزيتون',
@@ -197,7 +198,7 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(productsData);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  // تحسين آلية الفلترة للتأكد من عرض المنتجات الصحيحة تحت كل فئة
+  // Filter products based on search query and selected category
   useEffect(() => {
     let filtered = productsData;
     
@@ -209,7 +210,7 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
       );
     }
     
-    // Filter by category - تحسين آلية الفلترة
+    // Filter by category
     if (selectedCategory !== 'الكل') {
       filtered = filtered.filter(product => product.category === selectedCategory);
       console.log(`تصفية حسب الفئة: ${selectedCategory}، المنتجات: ${filtered.length}`);
@@ -242,6 +243,12 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
       }
     };
   }, []);
+
+  // Get product count for each category
+  const getCategoryCount = (categoryName: string) => {
+    if (categoryName === 'الكل') return productsData.length;
+    return productsData.filter(product => product.category === categoryName).length;
+  };
 
   return (
     <section
@@ -279,24 +286,28 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
                 />
               </div>
               
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
-                <Filter className="h-4 w-4 text-foreground/70" />
-                {categories.map((category) => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? 'default' : 'outline'}
-                    size="sm"
-                    className={cn(
-                      "whitespace-nowrap",
-                      selectedCategory === category 
-                        ? "bg-primary text-foreground" 
-                        : "text-foreground/70"
-                    )}
-                    onClick={() => setSelectedCategory(category)}
-                  >
-                    {category}
-                  </Button>
-                ))}
+              <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-2 md:pb-0 justify-center md:justify-start">
+                <Filter className="h-4 w-4 text-foreground/70 ml-1" />
+                <ToggleGroup type="single" value={selectedCategory} onValueChange={(value) => value && setSelectedCategory(value)}>
+                  {categories.map((category) => (
+                    <ToggleGroupItem
+                      key={category}
+                      value={category}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      className={cn(
+                        "whitespace-nowrap gap-2",
+                        selectedCategory === category 
+                          ? "bg-primary text-white" 
+                          : "text-foreground/70"
+                      )}
+                    >
+                      {category}
+                      <Badge variant="secondary" className="bg-background/20 text-xs">
+                        {getCategoryCount(category)}
+                      </Badge>
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
               </div>
             </div>
           </div>
