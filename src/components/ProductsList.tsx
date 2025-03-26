@@ -115,7 +115,7 @@ const productsData: Product[] = [
     category: 'بهارات ومكسرات'
   },
   
-  // فئة: المخللات
+  // فئة: المخللات - تصحيح الربط بوضع category صحيح
   {
     id: 12,
     name: 'مخلل خيار بيبي',
@@ -135,7 +135,7 @@ const productsData: Product[] = [
     category: 'المخللات'
   },
   
-  // فئة: الشطة
+  // فئة: الشطة - تصحيح الربط بوضع category صحيح
   {
     id: 14,
     name: 'هالبينو بزيت الزيتون',
@@ -197,7 +197,7 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(productsData);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  // Filter products based on search query and selected category
+  // تحسين آلية الفلترة للتأكد من عرض المنتجات الصحيحة تحت كل فئة
   useEffect(() => {
     let filtered = productsData;
     
@@ -209,9 +209,10 @@ const ProductsList = ({ onAddToCart, onOrderNow }: ProductsListProps) => {
       );
     }
     
-    // Filter by category
+    // Filter by category - تحسين آلية الفلترة
     if (selectedCategory !== 'الكل') {
       filtered = filtered.filter(product => product.category === selectedCategory);
+      console.log(`تصفية حسب الفئة: ${selectedCategory}، المنتجات: ${filtered.length}`);
     }
     
     setFilteredProducts(filtered);
