@@ -86,7 +86,7 @@ const Hero = () => {
           className="flex flex-col items-center text-white/80 hover:text-white transition-colors"
           aria-label="التمرير لأسفل"
         >
-          <span className="text-sm mb-1">ا22كتشف المزيد</span>
+          <span className="text-sm mb-1">اكتشف المزيد</span>
           <ChevronDown className="h-6 w-6" />
         </button>
       </div>
