@@ -54,18 +54,21 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
 
-  // Scroll to section function
+  // Enhanced scroll to section function 
   const scrollToSection = (sectionId: string, e: React.MouseEvent) => {
     e.preventDefault();
     
-    // If we're not on the home page, navigate to home first
+    // If we're not on the home page, navigate to home first with the hash
     if (location.pathname !== '/') {
       window.location.href = sectionId;
       return;
     }
     
+    // Extract the section ID without the # symbol
+    const elementId = sectionId.replace('/#', '');
+    
     // Get element and scroll to it
-    const element = document.getElementById(sectionId.replace('#', ''));
+    const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       // Close mobile menu if open

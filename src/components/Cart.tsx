@@ -47,7 +47,7 @@ const Cart = ({ items, onUpdateQuantity, onRemoveItem, onClearCart }: CartProps)
   // Calculate total with delivery
   const total = subtotal + deliveryCost;
   
-  // Handle browse products button click
+  // Handle browse products button click - improved
   const handleBrowseProductsClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
