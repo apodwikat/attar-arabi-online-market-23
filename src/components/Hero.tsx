@@ -39,7 +39,7 @@ const Hero = () => {
       <div className={`absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background/90 z-10 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}></div>
       <div
         ref={heroRef}
-        className={`absolute inset-0 bg-[url('/lovable-uploads/243a34e2-360c-4a08-85bd-7fba5f5aba54.png')] bg-cover bg-center transition-transform duration-1000 ${isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'}`}
+        className={`absolute inset-0 bg-[url('https://pin.it/2cArqFpje')] bg-cover bg-center transition-transform duration-1000 ${isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'}`}
       ></div>
       
       {/* Content */}
