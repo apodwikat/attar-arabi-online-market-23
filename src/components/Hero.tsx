@@ -40,7 +40,7 @@ const Hero = () => {
       
       <div
         ref={heroRef}
-        className={`absolute inset-0 bg-[url('/background-1.jpg')] bg-cover bg-center transition-transform duration-1000 
+        className={`absolute inset-0 bg-[url('/public/background-1.jpg')] bg-cover bg-center transition-transform duration-1000 
         ${isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'}`}
       ></div>
 
