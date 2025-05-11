@@ -51,6 +51,22 @@ const en = {
   aboutUsServicesTitle: 'Our Services',
   aboutUsServicesDesc: 'We offer a wide range of traditional Palestinian food products, from olive oil and za\'atar to traditional sweets and spices. We also provide wholesale services for businesses.',
   
+  // Donation Section
+  donationTitle: 'Donate to Those in Need',
+  donationDesc: 'You can contribute to supporting families in need by donating our food products. We deliver your donations to deserving families with complete transparency and integrity.',
+  basicPackage: 'Basic Package',
+  mediumPackage: 'Medium Package',
+  premiumPackage: 'Premium Package',
+  makdousKg: '1 kg Makdous',
+  labnehVillage: '500g Village Labneh',
+  naturalHoney: '500g Natural Honey',
+  naturalHoneyKg: '1 kg Natural Honey',
+  villageCheeseKg: '1 kg Village Cheese',
+  freeDelivery: 'Free Delivery',
+  donateNow: 'Donate Now',
+  customDonation: 'You can also donate a custom amount or specific products',
+  customDonateBtn: 'Custom Donation',
+  
   // Product Card
   addToCart: 'Add to Cart',
   outOfStock: 'Out of Stock',
