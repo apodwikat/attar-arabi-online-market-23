@@ -5,18 +5,20 @@ import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle } from 
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useLocation, Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 type NavItem = {
-  name: string;
+  nameKey: string;
   href: string;
 };
 
 const navItems: NavItem[] = [
-  { name: 'من نحن', href: '/#about' },
-  { name: 'منتجاتنا', href: '/#products' },
-  { name: 'العروض الخاصة', href: '/#offers' },
-  { name: 'التبرع', href: '/#donation' },
-  { name: 'اتصل بنا', href: '/#contact' },
+  { nameKey: 'aboutUs', href: '/#about' },
+  { nameKey: 'products', href: '/#products' },
+  { nameKey: 'specialOffers', href: '/#offers' },
+  { nameKey: 'donation', href: '/#donation' },
+  { nameKey: 'contactUs', href: '/#contact' },
 ];
 
 // Social media links
@@ -30,6 +32,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
   
   // Handle scroll effect
   useEffect(() => {
@@ -87,7 +90,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         {/* Logo */}
         <div className="flex-1">
           <Link to="/" className="inline-block">
-            <h1 className="text-2xl font-bold text-primary">العطار العربي</h1>
+            <h1 className="text-2xl font-bold text-primary">{t('tagline')}</h1>
           </Link>
         </div>
         
@@ -95,12 +98,12 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
           {navItems.map((item) => (
             <a
-              key={item.name}
+              key={item.nameKey}
               href={item.href}
               onClick={(e) => scrollToSection(item.href, e)}
               className="text-foreground/80 hover:text-primary font-medium transition-all relative group"
             >
-              {item.name}
+              {t(item.nameKey as any)}
               <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
             </a>
           ))}
@@ -108,6 +111,9 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         
         {/* Social & Cart */}
         <div className="flex items-center gap-3 flex-1 justify-end">
+          {/* Language Switcher */}
+          <LanguageSwitcher className="hidden md:flex" />
+          
           {/* Social Icons */}
           <div className="hidden md:flex items-center gap-2">
             <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="فيسبوك">
@@ -140,7 +146,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
               onClick={() => alert("ميزة تسجيل الدخول قيد التطوير")}
             >
               <User className="h-4 w-4" />
-              <span>تسجيل الدخول</span>
+              <span>{t('login')}</span>
             </Button>
             <Button 
               variant="default" 
@@ -148,7 +154,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
               className="hidden md:inline-flex"
               onClick={() => alert("ميزة إنشاء حساب قيد التطوير")}
             >
-              إنشاء حساب
+              {t('register')}
             </Button>
             
             {/* Mobile Menu Trigger */}
@@ -175,7 +181,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
       >
         <div className="p-4">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-bold text-primary">العطار العربي</h2>
+            <h2 className="text-lg font-bold text-primary">{t('tagline')}</h2>
             <Button
               variant="ghost"
               size="icon"
@@ -188,14 +194,21 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
               <a
-                key={item.name}
+                key={item.nameKey}
                 href={item.href}
                 className="py-2 px-3 rounded-md hover:bg-muted transition-colors"
                 onClick={(e) => scrollToSection(item.href, e)}
               >
-                {item.name}
+                {t(item.nameKey as any)}
               </a>
             ))}
+            
+            <div className="h-px bg-border my-2"></div>
+            
+            {/* Language Switcher in Mobile Menu */}
+            <div className="py-2 px-3">
+              <LanguageSwitcher />
+            </div>
             
             <div className="h-px bg-border my-2"></div>
             
@@ -208,7 +221,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
               }}
             >
               <User className="h-4 w-4" />
-              <span>تسجيل الدخول</span>
+              <span>{t('login')}</span>
             </Button>
             
             <Button 
@@ -219,7 +232,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
                 setIsMobileMenuOpen(false);
               }}
             >
-              إنشاء حساب
+              {t('register')}
             </Button>
             
             <div className="h-px bg-border my-2"></div>
