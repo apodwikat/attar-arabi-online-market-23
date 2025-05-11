@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -12,6 +11,7 @@ import { ChevronUp, Facebook, Instagram, Phone, Mail, MessageCircle, MapPin } fr
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 import LoginModal from '@/components/LoginModal';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const socialLinks = {
   facebook: "https://www.facebook.com/alattararabi",
@@ -23,6 +23,7 @@ const Index = () => {
   const [cartItems, setCartItems] = useState<(Product & { quantity: number })[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { t } = useTranslation();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -149,17 +150,17 @@ const Index = () => {
         <section id="contact" className="py-20 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">اتصل بنا</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('contactUsTitle')}</h2>
               <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
               <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
-                نحن هنا للإجابة على جميع استفساراتكم ومساعدتكم في كل ما تحتاجون. لا تترددوا في التواصل معنا عبر أي من وسائل الاتصال التالية.
+                {t('contactUsDescription')}
               </p>
             </div>
             
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="glass-card rounded-xl p-6">
-                  <h3 className="text-xl font-bold mb-6">معلومات التواصل</h3>
+                  <h3 className="text-xl font-bold mb-6">{t('contactInformation')}</h3>
                   
                   <div className="space-y-6">
                     <div className="flex items-center gap-4">
@@ -167,7 +168,7 @@ const Index = () => {
                         <Phone className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm text-foreground/70">أرقام الهاتف</p>
+                        <p className="text-sm text-foreground/70">{t('phoneNumbers')}</p>
                         <p className="font-medium">970597167176+</p>
                         <p className="font-medium">0543655351</p>
                       </div>
@@ -178,7 +179,7 @@ const Index = () => {
                         <Mail className="h-5 w-5 text-secondary" />
                       </div>
                       <div>
-                        <p className="text-sm text-foreground/70">البريد الإلكتروني</p>
+                        <p className="text-sm text-foreground/70">{t('emailAddress')}</p>
                         <p className="font-medium">info@attararabi.com</p>
                       </div>
                     </div>
@@ -188,15 +189,15 @@ const Index = () => {
                         <MapPin className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm text-foreground/70">العنوان</p>
-                        <p className="font-medium">نابلس، فلسطين</p>
+                        <p className="text-sm text-foreground/70">{t('address')}</p>
+                        <p className="font-medium">{t('location')}</p>
                       </div>
                     </div>
                   </div>
                   
                   <Separator className="my-6" />
                   
-                  <h3 className="text-xl font-bold mb-4">تابعنا على</h3>
+                  <h3 className="text-xl font-bold mb-4">{t('followUs')}</h3>
                   <div className="flex items-center gap-4">
                     <a
                       href={socialLinks.facebook}
@@ -234,7 +235,7 @@ const Index = () => {
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="موقع العطار العربي"
+                    title={t('location')}
                   ></iframe>
                 </div>
               </div>
@@ -246,9 +247,9 @@ const Index = () => {
       <footer className="bg-gradient-to-r from-primary/5 to-secondary/5 py-10">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-primary mb-4">العطار العربي</h2>
+            <h2 className="text-2xl font-bold text-primary mb-4">{t('appName')}</h2>
             <p className="text-foreground/70 max-w-xl mx-auto mb-6">
-              منتجات غذائية تقليدية فلسطينية أصيلة، مصنوعة بحب واهتمام للحفاظ على أصالة المذاق وجودة المكونات.
+              {t('footerDescription')}
             </p>
             
             <div className="flex justify-center gap-6 mb-6">
@@ -266,7 +267,7 @@ const Index = () => {
             <Separator className="max-w-md mx-auto mb-6" />
             
             <p className="text-sm text-foreground/60">
-              &copy; {new Date().getFullYear()} العطار العربي. جميع الحقوق محفوظة.
+              &copy; {new Date().getFullYear()} {t('appName')}. {t('copyright')}.
             </p>
           </div>
         </div>
@@ -276,7 +277,7 @@ const Index = () => {
         <button
           className="fixed bottom-6 right-6 h-10 w-10 rounded-full bg-primary text-foreground flex items-center justify-center shadow-lg transition-all hover:-translate-y-1 z-50"
           onClick={scrollToTop}
-          aria-label="العودة إلى الأعلى"
+          aria-label={t('scrollToTop')}
         >
           <ChevronUp className="h-6 w-6" />
         </button>

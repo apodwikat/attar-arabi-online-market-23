@@ -1,4 +1,3 @@
-
 const en = {
   // General
   appName: 'Al-Attar Al-Arabi',
@@ -66,6 +65,17 @@ const en = {
   donateNow: 'Donate Now',
   customDonation: 'You can also donate a custom amount or specific products',
   customDonateBtn: 'Custom Donation',
+  
+  // Contact Section
+  contactUs: 'Contact Us',
+  contactUsTitle: 'Contact Us',
+  contactUsDescription: 'We are here to answer all your inquiries and assist you with anything you need. Feel free to reach out to us through any of the following contact methods.',
+  contactInformation: 'Contact Information',
+  phoneNumbers: 'Phone Numbers',
+  emailAddress: 'Email Address',
+  address: 'Address',
+  followUs: 'Follow Us On',
+  location: 'Nablus, Palestine',
   
   // Product Card
   addToCart: 'Add to Cart',
