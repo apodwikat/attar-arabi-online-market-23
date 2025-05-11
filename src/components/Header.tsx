@@ -1,23 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useLocation, Link } from 'react-router-dom';
+import { useTranslation } from '@/hooks/useTranslation';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type NavItem = {
   name: string;
   href: string;
 };
-
-const navItems: NavItem[] = [
-  { name: 'من نحن', href: '/#about' },
-  { name: 'منتجاتنا', href: '/#products' },
-  { name: 'العروض الخاصة', href: '/#offers' },
-  { name: 'التبرع', href: '/#donation' },
-  { name: 'اتصل بنا', href: '/#contact' },
-];
 
 // Social media links
 const socialLinks = {
@@ -30,6 +29,16 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t, language, changeLanguage } = useTranslation();
+  
+  // Load nav items with translations
+  const navItems: NavItem[] = [
+    { name: t('aboutUs'), href: '/#about' },
+    { name: t('products'), href: '/#products' },
+    { name: t('offers'), href: '/#offers' },
+    { name: t('donation'), href: '/#donation' },
+    { name: t('contact'), href: '/#contact' },
+  ];
   
   // Handle scroll effect
   useEffect(() => {
@@ -75,6 +84,10 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
       setIsMobileMenuOpen(false);
     }
   };
+  
+  const toggleLanguage = () => {
+    changeLanguage(language === 'ar' ? 'en' : 'ar');
+  };
 
   return (
     <header className={cn(
@@ -87,7 +100,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
         {/* Logo */}
         <div className="flex-1">
           <Link to="/" className="inline-block">
-            <h1 className="text-2xl font-bold text-primary">العطار العربي</h1>
+            <h1 className="text-2xl font-bold text-primary">{t('appName')}</h1>
           </Link>
         </div>
         
@@ -106,8 +119,25 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
           ))}
         </nav>
         
-        {/* Social & Cart */}
+        {/* Social, Language & Cart */}
         <div className="flex items-center gap-3 flex-1 justify-end">
+          {/* Language Toggle */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Globe className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => changeLanguage('ar')}>
+                العربية
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => changeLanguage('en')}>
+                English
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           {/* Social Icons */}
           <div className="hidden md:flex items-center gap-2">
             <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-all" aria-label="فيسبوك">
@@ -133,22 +163,23 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
                 )}
               </Button>
             </Link>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="hidden md:flex gap-2 items-center"
-              onClick={() => alert("ميزة تسجيل الدخول قيد التطوير")}
-            >
-              <User className="h-4 w-4" />
-              <span>تسجيل الدخول</span>
-            </Button>
+            <Link to="/register">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="hidden md:flex gap-2 items-center"
+              >
+                <User className="h-4 w-4" />
+                <span>{t('register')}</span>
+              </Button>
+            </Link>
             <Button 
               variant="default" 
               size="sm" 
               className="hidden md:inline-flex"
               onClick={() => alert("ميزة إنشاء حساب قيد التطوير")}
             >
-              إنشاء حساب
+              {t('login')}
             </Button>
             
             {/* Mobile Menu Trigger */}
@@ -175,7 +206,7 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
       >
         <div className="p-4">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-bold text-primary">العطار العربي</h2>
+            <h2 className="text-lg font-bold text-primary">{t('appName')}</h2>
             <Button
               variant="ghost"
               size="icon"
@@ -199,27 +230,35 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
             
             <div className="h-px bg-border my-2"></div>
             
+            {/* Language Toggle in Mobile Menu */}
             <Button 
               variant="outline" 
               className="w-full justify-center gap-2"
-              onClick={() => {
-                alert("ميزة تسجيل الدخول قيد التطوير");
-                setIsMobileMenuOpen(false);
-              }}
+              onClick={toggleLanguage}
             >
-              <User className="h-4 w-4" />
-              <span>تسجيل الدخول</span>
+              <Globe className="h-4 w-4" />
+              <span>{language === 'ar' ? 'English' : 'العربية'}</span>
             </Button>
+            
+            <Link to="/register">
+              <Button 
+                variant="outline" 
+                className="w-full justify-center gap-2"
+              >
+                <User className="h-4 w-4" />
+                <span>{t('register')}</span>
+              </Button>
+            </Link>
             
             <Button 
               variant="default" 
               className="w-full justify-center"
               onClick={() => {
-                alert("ميزة إنشاء حساب قيد التطوير");
+                alert("ميزة تسجيل الدخول قيد التطوير");
                 setIsMobileMenuOpen(false);
               }}
             >
-              إنشاء حساب
+              {t('login')}
             </Button>
             
             <div className="h-px bg-border my-2"></div>

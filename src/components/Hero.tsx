@@ -1,10 +1,13 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { t } = useTranslation();
 
   // Simple parallax effect
   useEffect(() => {
@@ -49,12 +52,12 @@ const Hero = () => {
         <div className={`transition-all duration-1000 transform 
           ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            العطار العربي
+            {t('heroPrimary')}
           </h1>
           <p className="text-white/90 text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-            أفضل المنتجات الغذائية التقليدية الفلسطينية الأصيلة
+            {t('heroSecondary')}
             <br />
-            بجودة عالية وأسعار منافسة
+            {t('heroSubtext')}
           </p>
         </div>
 
@@ -65,7 +68,7 @@ const Hero = () => {
             className="bg-primary hover:bg-primary/90 text-foreground min-w-[150px]"
             onClick={scrollToProducts}
           >
-            تسوق الآن
+            {t('shopNow')}
           </Button>
           <Button
             variant="outline"
@@ -73,7 +76,7 @@ const Hero = () => {
             className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm min-w-[150px]"
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            تعرف علينا
+            {t('learnMore')}
           </Button>
         </div>
       </div>
@@ -84,9 +87,9 @@ const Hero = () => {
         <button
           onClick={scrollToProducts}
           className="flex flex-col items-center text-white/80 hover:text-white transition-colors"
-          aria-label="التمرير لأسفل"
+          aria-label={t('scrollDown')}
         >
-          <span className="text-sm mb-1">تعرف اكثر علينا</span>
+          <span className="text-sm mb-1">{t('scrollDown')}</span>
           <ChevronDown className="h-6 w-6" />
         </button>
       </div>
