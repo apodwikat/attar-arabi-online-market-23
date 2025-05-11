@@ -35,6 +35,22 @@ const en = {
   learnMore: 'Learn More',
   scrollDown: 'Learn more about us',
   
+  // About Us Section
+  aboutUsTitle: 'About Us',
+  aboutUsParagraph1: 'Al-Attar Al-Arabi is a pioneer in providing traditional Palestinian food products with the highest quality and competitive prices.',
+  aboutUsParagraph2: 'We pride ourselves on offering authentic products that preserve the Palestinian heritage and traditions, bringing the taste of Palestine to your table.',
+  aboutUsValuesTitle: 'Our Values',
+  aboutUsQuality: 'Quality',
+  aboutUsQualityDesc: 'We ensure that all our products meet the highest standards of quality',
+  aboutUsAuthenticity: 'Authenticity',
+  aboutUsAuthenticityDesc: 'Preserving the authentic Palestinian flavors and traditions',
+  aboutUsTrust: 'Trust',
+  aboutUsTrustDesc: 'Building trust with our customers through transparency and reliability',
+  aboutUsHistoryTitle: 'Our History',
+  aboutUsHistoryDesc: 'Founded in 2010, Al-Attar Al-Arabi has been serving customers for over a decade, gradually expanding our product line while maintaining our commitment to quality and authenticity.',
+  aboutUsServicesTitle: 'Our Services',
+  aboutUsServicesDesc: 'We offer a wide range of traditional Palestinian food products, from olive oil and za\'atar to traditional sweets and spices. We also provide wholesale services for businesses.',
+  
   // Product Card
   addToCart: 'Add to Cart',
   outOfStock: 'Out of Stock',
