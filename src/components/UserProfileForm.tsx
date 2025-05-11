@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select';
 import { useTranslation } from '@/hooks/useTranslation';
 import { toast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface UserProfileFormProps {
   onSuccess?: () => void;
@@ -32,6 +33,7 @@ const UserProfileForm = ({ onSuccess }: UserProfileFormProps) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const { user, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
   
   const formSchema = z.object({
     fullName: z.string().min(3, t('fullNameRequired')),
@@ -44,6 +46,13 @@ const UserProfileForm = ({ onSuccess }: UserProfileFormProps) => {
     deliveryLocation: z.string().min(1, t('deliveryLocationRequired')),
     preferredContact: z.string().min(1, t('preferredContactRequired')),
   });
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   // Get existing profile data from localStorage
   const getExistingProfile = () => {
@@ -62,7 +71,7 @@ const UserProfileForm = ({ onSuccess }: UserProfileFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: existingProfile?.fullName || user?.name || '',
-      region: existingProfile?.region || '',
+      region: existingProfile?.region || user?.city || '',
       address: existingProfile?.address || '',
       phone: existingProfile?.phone || user?.phone || '',
       phone2: existingProfile?.phone2 || '',
@@ -72,6 +81,15 @@ const UserProfileForm = ({ onSuccess }: UserProfileFormProps) => {
       preferredContact: existingProfile?.preferredContact || 'whatsapp',
     },
   });
+
+  // Update form values when user data changes
+  useEffect(() => {
+    if (user) {
+      form.setValue('fullName', user.name || form.getValues('fullName'));
+      form.setValue('region', user.city || form.getValues('region'));
+      form.setValue('phone', user.phone || form.getValues('phone'));
+    }
+  }, [user, form]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
@@ -105,6 +123,10 @@ const UserProfileForm = ({ onSuccess }: UserProfileFormProps) => {
       setIsLoading(false);
     }
   };
+
+  if (!user) {
+    return null; // Don't render form if user isn't logged in
+  }
 
   return (
     <div className="glass-card rounded-xl p-6">

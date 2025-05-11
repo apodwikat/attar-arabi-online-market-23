@@ -8,6 +8,17 @@ const en = {
   login: 'Login',
   register: 'Register',
   logout: 'Logout',
+  error: 'Error',
+  loading: 'Loading',
+  success: 'Success',
+  updating: 'Updating...',
+  loggingIn: 'Logging in...',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
+  save: 'Save',
+  delete: 'Delete',
+  edit: 'Edit',
+  scrollToTop: 'Scroll to top',
   
   // Navigation
   aboutUs: 'About Us',
@@ -27,6 +38,8 @@ const en = {
   // Product Card
   addToCart: 'Add to Cart',
   outOfStock: 'Out of Stock',
+  price: 'Price',
+  stock: 'Stock',
   
   // Cart Page
   cartTitle: 'Shopping Cart',
@@ -37,6 +50,8 @@ const en = {
   subtotal: 'Subtotal',
   deliveryCost: 'Delivery Cost',
   total: 'Total',
+  discount: 'Discount',
+  finalPrice: 'Final Price',
   checkout: 'Checkout via WhatsApp',
   sendToSalesTeam: 'Send to Sales Team',
   itemRemoved: 'Product Removed',
@@ -55,6 +70,8 @@ const en = {
   // Authentication
   email: 'Email',
   password: 'Password',
+  enterEmail: 'Enter your email',
+  enterPassword: 'Enter your password',
   phoneNumber: 'Phone Number',
   phoneNumber2: 'Phone Number 2 (Optional)',
   confirmPassword: 'Confirm Password',
@@ -70,6 +87,16 @@ const en = {
   preferredContact: 'Preferred Contact Method',
   deliveryLocation: 'Delivery Location',
   notes: 'Notes',
+  loginDescription: 'Sign in to your account to manage your orders and profile',
+  dontHaveAccount: "Don't have an account?",
+  customerLogin: 'Customer Login',
+  ownerLogin: 'Owner Login',
+  loginSuccess: 'Login Successful',
+  loginSuccessDescription: 'You have successfully logged in',
+  loginFailed: 'Login Failed',
+  loginFailedDescription: 'Please check your credentials and try again',
+  ownerLoginSuccess: 'Owner Login Successful',
+  ownerLoginSuccessDescription: 'Welcome to the owner dashboard',
   
   // Form Validations
   invalidEmail: 'Please enter a valid email',
@@ -82,6 +109,7 @@ const en = {
   socialMediaRequired: 'Social media account is required',
   socialMediaTypeRequired: 'Social media account type is required',
   deliveryLocationRequired: 'Delivery location is required',
+  preferredContactRequired: 'Preferred contact method is required',
   
   // Delivery Options
   deliveryBy: 'Delivery By',
@@ -92,9 +120,48 @@ const en = {
   // User Profile
   profile: 'Profile',
   updateProfile: 'Update Profile',
+  profileUpdated: 'Profile Updated',
+  profileUpdatedDesc: 'Your profile has been updated successfully',
+  profileUpdateError: 'Failed to update profile',
+  updateProfileDescription: 'Update your personal information and preferences',
+  registerDescription: 'Create an account to start shopping and track your orders',
+  
+  // Owner Dashboard
+  ownerDashboard: 'Owner Dashboard',
+  welcomeOwner: 'Welcome to the owner dashboard',
+  manageProducts: 'Manage Products',
+  manageOrders: 'Manage Orders',
+  viewAnalytics: 'Analytics',
+  systemSettings: 'Settings',
+  addProduct: 'Add Product',
+  productName: 'Product Name',
+  category: 'Category',
+  orderNumber: 'Order #',
+  customerName: 'Customer',
+  orderDate: 'Date',
+  status: 'Status',
+  viewDetails: 'View Details',
+  completed: 'Completed',
+  processing: 'Processing',
+  pending: 'Pending',
+  analyticsComingSoon: 'Analytics features coming soon',
+  settingsComingSoon: 'Settings features coming soon',
+
+  // Order Information
+  buyerName: 'Buyer Name',
+  orderMethod: 'Order Method',
+  contactInformation: 'Contact Information',
+  buyerLocation: 'Buyer Location',
+  deliveryAddress: 'Delivery Address',
+  items: 'Items',
+  sellerName: 'Seller Name',
+  website: 'Website',
+  addItem: 'Add Item',
+  quantity: 'Quantity',
   
   // Footer
   copyright: 'All Rights Reserved',
+  footerDescription: 'Best traditional Palestinian food products with high quality and competitive prices.',
   
   // Language
   language: 'Language',

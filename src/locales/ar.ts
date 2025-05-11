@@ -8,6 +8,17 @@ const ar = {
   login: 'تسجيل الدخول',
   register: 'إنشاء حساب',
   logout: 'تسجيل الخروج',
+  error: 'خطأ',
+  loading: 'جاري التحميل',
+  success: 'نجاح',
+  updating: 'جاري التحديث...',
+  loggingIn: 'جاري تسجيل الدخول...',
+  confirm: 'تأكيد',
+  cancel: 'إلغاء',
+  save: 'حفظ',
+  delete: 'حذف',
+  edit: 'تعديل',
+  scrollToTop: 'التمرير للأعلى',
   
   // Navigation
   aboutUs: 'من نحن',
@@ -27,6 +38,8 @@ const ar = {
   // Product Card
   addToCart: 'أضف الى السلة',
   outOfStock: 'نفذت الكمية',
+  price: 'السعر',
+  stock: 'المخزون',
   
   // Cart Page
   cartTitle: 'سلة التسوق',
@@ -37,6 +50,8 @@ const ar = {
   subtotal: 'المجموع الفرعي',
   deliveryCost: 'رسوم التوصيل',
   total: 'المجموع',
+  discount: 'الخصم',
+  finalPrice: 'السعر النهائي',
   checkout: 'إتمام الطلب عبر واتساب',
   sendToSalesTeam: 'إرسال إلى فريق المبيعات',
   itemRemoved: 'تمت إزالة المنتج',
@@ -55,6 +70,8 @@ const ar = {
   // Authentication
   email: 'البريد الإلكتروني',
   password: 'كلمة المرور',
+  enterEmail: 'أدخل بريدك الإلكتروني',
+  enterPassword: 'أدخل كلمة المرور',
   phoneNumber: 'رقم الهاتف',
   phoneNumber2: 'رقم الهاتف 2 (اختياري)',
   confirmPassword: 'تأكيد كلمة المرور',
@@ -70,6 +87,16 @@ const ar = {
   preferredContact: 'وسيلة التواصل المفضلة',
   deliveryLocation: 'منطقة التوصيل',
   notes: 'ملاحظات',
+  loginDescription: 'قم بتسجيل الدخول لإدارة طلباتك وحسابك الشخصي',
+  dontHaveAccount: 'ليس لديك حساب؟',
+  customerLogin: 'دخول العملاء',
+  ownerLogin: 'دخول المدير',
+  loginSuccess: 'تم تسجيل الدخول بنجاح',
+  loginSuccessDescription: 'تم تسجيل دخولك بنجاح',
+  loginFailed: 'فشل تسجيل الدخول',
+  loginFailedDescription: 'الرجاء التحقق من بيانات الدخول والمحاولة مرة أخرى',
+  ownerLoginSuccess: 'تم تسجيل دخول المدير بنجاح',
+  ownerLoginSuccessDescription: 'مرحبًا بك في لوحة تحكم المدير',
   
   // Form Validations
   invalidEmail: 'الرجاء إدخال بريد إلكتروني صحيح',
@@ -82,6 +109,7 @@ const ar = {
   socialMediaRequired: 'حساب التواصل الاجتماعي مطلوب',
   socialMediaTypeRequired: 'نوع حساب التواصل الاجتماعي مطلوب',
   deliveryLocationRequired: 'منطقة التوصيل مطلوبة',
+  preferredContactRequired: 'وسيلة التواصل المفضلة مطلوبة',
   
   // Delivery Options
   deliveryBy: 'التوصيل',
@@ -92,9 +120,48 @@ const ar = {
   // User Profile
   profile: 'الملف الشخصي',
   updateProfile: 'تحديث الملف الشخصي',
+  profileUpdated: 'تم تحديث الملف الشخصي',
+  profileUpdatedDesc: 'تم تحديث بياناتك الشخصية بنجاح',
+  profileUpdateError: 'فشل تحديث الملف الشخصي',
+  updateProfileDescription: 'قم بتحديث معلوماتك الشخصية وتفضيلاتك',
+  registerDescription: 'قم بإنشاء حساب للبدء بالتسوق ومتابعة طلباتك',
+  
+  // Owner Dashboard
+  ownerDashboard: 'لوحة تحكم المدير',
+  welcomeOwner: 'مرحبًا بك في لوحة تحكم المدير',
+  manageProducts: 'إدارة المنتجات',
+  manageOrders: 'إدارة الطلبات',
+  viewAnalytics: 'التحليلات',
+  systemSettings: 'الإعدادات',
+  addProduct: 'إضافة منتج',
+  productName: 'اسم المنتج',
+  category: 'الفئة',
+  orderNumber: 'رقم الطلب',
+  customerName: 'العميل',
+  orderDate: 'التاريخ',
+  status: 'الحالة',
+  viewDetails: 'عرض التفاصيل',
+  completed: 'مكتمل',
+  processing: 'قيد المعالجة',
+  pending: 'قيد الانتظار',
+  analyticsComingSoon: 'ميزات التحليلات قادمة قريباً',
+  settingsComingSoon: 'ميزات الإعدادات قادمة قريباً',
+  
+  // Order Information
+  buyerName: 'اسم المشتري',
+  orderMethod: 'طريقة الطلب',
+  contactInformation: 'معلومات الاتصال',
+  buyerLocation: 'موقع المشتري',
+  deliveryAddress: 'عنوان التوصيل',
+  items: 'المنتجات',
+  sellerName: 'اسم البائع',
+  website: 'الموقع الإلكتروني',
+  addItem: 'إضافة منتج',
+  quantity: 'الكمية',
   
   // Footer
   copyright: 'جميع الحقوق محفوظة',
+  footerDescription: 'أفضل المنتجات الغذائية التقليدية الفلسطينية بجودة عالية وأسعار منافسة.',
   
   // Language
   language: 'اللغة',

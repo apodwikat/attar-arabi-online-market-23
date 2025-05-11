@@ -8,6 +8,7 @@ export interface User {
   city: string;
   phone: string;
   isAuthenticated: boolean;
+  isOwner?: boolean; // Added owner flag
 }
 
 // Authentication context
@@ -16,6 +17,8 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   loginWithFacebook: () => Promise<void>;
+  loginWithCredentials: (email: string, password: string) => Promise<void>; // Added credentials login
+  loginAsOwner: () => Promise<void>; // Added owner login
   sendPhoneVerification: (phoneNumber: string) => Promise<void>;
   verifyPhoneCode: (code: string) => Promise<void>;
   updateUserProfile: (userData: Partial<User>) => Promise<void>;
@@ -50,6 +53,76 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem('user');
     }
   }, [user]);
+
+  // New method for email/password login
+  const loginWithCredentials = async (email: string, password: string): Promise<void> => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // In a real app, this would validate against a backend
+      // For now, simulate successful login
+      
+      // Get existing profile from localStorage if available
+      const storedProfile = localStorage.getItem('userProfile');
+      let profileData = {}; 
+      
+      if (storedProfile) {
+        profileData = JSON.parse(storedProfile);
+      }
+      
+      // Create user object with email (would come from backend in real app)
+      const userData: User = {
+        id: `user-${Date.now()}`, // Generate temporary ID
+        name: (profileData as any).fullName || email.split('@')[0],
+        city: (profileData as any).region || '',
+        phone: (profileData as any).phone || '',
+        isAuthenticated: true
+      };
+      
+      // Set the authenticated user
+      setUser(userData);
+      
+      console.log('User logged in successfully:', userData);
+      
+    } catch (err) {
+      setError('فشل تسجيل الدخول. الرجاء التحقق من بريدك الإلكتروني وكلمة المرور');
+      console.error('Login error:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Owner login method
+  const loginAsOwner = async (): Promise<void> => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Create owner user object
+      const ownerData: User = {
+        id: 'owner-1',
+        name: 'Admin',
+        city: '',
+        phone: '',
+        isAuthenticated: true,
+        isOwner: true
+      };
+      
+      // Set the authenticated owner
+      setUser(ownerData);
+      
+      console.log('Owner logged in successfully');
+      
+    } catch (err) {
+      setError('فشل تسجيل الدخول كمدير. الرجاء المحاولة مرة أخرى');
+      console.error('Owner login error:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const loginWithFacebook = async (): Promise<void> => {
     setIsLoading(true);
@@ -137,10 +210,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       // Update user data
       if (user) {
-        setUser({
+        const updatedUser = {
           ...user,
           ...userData,
-        });
+        };
+        setUser(updatedUser);
+      } else {
+        // If no user exists yet, create one with the provided data
+        const newUser: User = {
+          id: `user-${Date.now()}`,
+          name: userData.name || '',
+          city: userData.city || '',
+          phone: userData.phone || '',
+          isAuthenticated: true,
+        };
+        setUser(newUser);
       }
       
     } catch (err) {
@@ -163,6 +247,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         error,
         loginWithFacebook,
+        loginWithCredentials,
+        loginAsOwner,
         sendPhoneVerification,
         verifyPhoneCode,
         updateUserProfile,

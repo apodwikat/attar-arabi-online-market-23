@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle, Globe } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Facebook, Instagram, MessageCircle, Globe, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useAuth } from '@/hooks/useAuth';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +31,8 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { t, language, changeLanguage } = useTranslation();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   
   // Load nav items with translations
   const navItems: NavItem[] = [
@@ -87,6 +90,11 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
   
   const toggleLanguage = () => {
     changeLanguage(language === 'ar' ? 'en' : 'ar');
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -163,24 +171,53 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
                 )}
               </Button>
             </Link>
-            <Link to="/register">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="hidden md:flex gap-2 items-center"
-              >
-                <User className="h-4 w-4" />
-                <span>{t('register')}</span>
-              </Button>
-            </Link>
-            <Button 
-              variant="default" 
-              size="sm" 
-              className="hidden md:inline-flex"
-              onClick={() => alert("ميزة إنشاء حساب قيد التطوير")}
-            >
-              {t('login')}
-            </Button>
+            
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <User className="h-4 w-4" />
+                    <span className="hidden md:inline">{user.name}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    {t('profile')}
+                  </DropdownMenuItem>
+                  {user.isOwner && (
+                    <DropdownMenuItem onClick={() => navigate('/owner/dashboard')}>
+                      {t('ownerDashboard')}
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    {t('logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link to="/register">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="hidden md:flex gap-2 items-center"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>{t('register')}</span>
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="hidden md:inline-flex"
+                  >
+                    {t('login')}
+                  </Button>
+                </Link>
+              </>
+            )}
             
             {/* Mobile Menu Trigger */}
             <Button
@@ -240,26 +277,67 @@ const Header = ({ cartItemsCount = 0 }: { cartItemsCount?: number }) => {
               <span>{language === 'ar' ? 'English' : 'العربية'}</span>
             </Button>
             
-            <Link to="/register">
-              <Button 
-                variant="outline" 
-                className="w-full justify-center gap-2"
-              >
-                <User className="h-4 w-4" />
-                <span>{t('register')}</span>
-              </Button>
-            </Link>
-            
-            <Button 
-              variant="default" 
-              className="w-full justify-center"
-              onClick={() => {
-                alert("ميزة تسجيل الدخول قيد التطوير");
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              {t('login')}
-            </Button>
+            {user ? (
+              <>
+                <Button
+                  variant="outline"
+                  className="w-full justify-center gap-2"
+                  onClick={() => {
+                    navigate('/profile');
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  <User className="h-4 w-4" />
+                  <span>{t('profile')}</span>
+                </Button>
+                
+                {user.isOwner && (
+                  <Button
+                    variant="outline"
+                    className="w-full justify-center gap-2"
+                    onClick={() => {
+                      navigate('/owner/dashboard');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <span>{t('ownerDashboard')}</span>
+                  </Button>
+                )}
+                
+                <Button
+                  variant="default"
+                  className="w-full justify-center gap-2"
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>{t('logout')}</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-center gap-2"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>{t('register')}</span>
+                  </Button>
+                </Link>
+                
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button 
+                    variant="default" 
+                    className="w-full justify-center"
+                  >
+                    {t('login')}
+                  </Button>
+                </Link>
+              </>
+            )}
             
             <div className="h-px bg-border my-2"></div>
             
