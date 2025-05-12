@@ -10,8 +10,9 @@ export const fetchUserProfile = async (userId: string): Promise<{
 }> => {
   try {
     // Get user profile from profiles table
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
+    // Using any type to bypass the type checking since the tables aren't in the types yet
+    const { data: profile, error: profileError } = await (supabase
+      .from("profiles") as any)
       .select("*")
       .eq("id", userId)
       .single();
@@ -21,8 +22,8 @@ export const fetchUserProfile = async (userId: string): Promise<{
     }
 
     // Check if user is an admin
-    const { data: adminData, error: adminError } = await supabase
-      .from("admin_users")
+    const { data: adminData, error: adminError } = await (supabase
+      .from("admin_users") as any)
       .select("*")
       .eq("auth_id", userId)
       .single();
@@ -71,8 +72,8 @@ export const loginWithFacebookOAuth = async () => {
 
 // Update user profile
 export const updateProfile = async (userId: string, profileData: any) => {
-  return supabase
-    .from("profiles")
+  return (supabase
+    .from("profiles") as any)
     .upsert({
       id: userId,
       ...profileData
