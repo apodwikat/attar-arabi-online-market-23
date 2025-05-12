@@ -1,6 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@/types/auth.types";
+import { Database } from "@/integrations/supabase/types";
 
 // Handle profile fetching for a user
 export const fetchUserProfile = async (userId: string): Promise<{ 
@@ -10,9 +11,8 @@ export const fetchUserProfile = async (userId: string): Promise<{
 }> => {
   try {
     // Get user profile from profiles table
-    // Using any type to bypass the type checking since the tables aren't in the types yet
-    const { data: profile, error: profileError } = await (supabase
-      .from("profiles") as any)
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
       .select("*")
       .eq("id", userId)
       .single();
@@ -22,8 +22,8 @@ export const fetchUserProfile = async (userId: string): Promise<{
     }
 
     // Check if user is an admin
-    const { data: adminData, error: adminError } = await (supabase
-      .from("admin_users") as any)
+    const { data: adminData, error: adminError } = await supabase
+      .from('admin_users')
       .select("*")
       .eq("auth_id", userId)
       .single();
@@ -72,8 +72,8 @@ export const loginWithFacebookOAuth = async () => {
 
 // Update user profile
 export const updateProfile = async (userId: string, profileData: any) => {
-  return (supabase
-    .from("profiles") as any)
+  return supabase
+    .from('profiles')
     .upsert({
       id: userId,
       ...profileData
