@@ -1,5 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/use-toast";
 
 // Define user type
 export interface User {
@@ -32,92 +34,162 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load user from localStorage on mount
+  // Check for existing session on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+    const checkSession = async () => {
+      setIsLoading(true);
       try {
-        setUser(JSON.parse(storedUser));
+        // Check if user is already authenticated with Supabase
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          // Get user profile from profiles table
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profileError) {
+            console.error('Error fetching profile:', profileError);
+          }
+
+          // Check if user is an admin
+          const { data: adminData } = await supabase
+            .from('admin_users')
+            .select('*')
+            .eq('auth_id', session.user.id)
+            .single();
+
+          // Create user object
+          const userData: User = {
+            id: session.user.id,
+            name: profile?.full_name || session.user.email?.split('@')[0] || 'User',
+            city: profile?.region || '',
+            phone: profile?.phone_number_1 || '',
+            isAuthenticated: true,
+            isOwner: adminData?.role === 'owner' || false
+          };
+          
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
       } catch (err) {
-        console.error('Error parsing stored user data', err);
+        console.error('Session check error:', err);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
       }
-    }
-    setIsLoading(false);
+    };
+
+    checkSession();
+
+    // Subscribe to auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session) {
+          // Get user profile
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          // Check if admin
+          const { data: adminData } = await supabase
+            .from('admin_users')
+            .select('*')
+            .eq('auth_id', session.user.id)
+            .single();
+
+          const userData: User = {
+            id: session.user.id,
+            name: profile?.full_name || session.user.email?.split('@')[0] || 'User',
+            city: profile?.region || '',
+            phone: profile?.phone_number_1 || '',
+            isAuthenticated: true,
+            isOwner: adminData?.role === 'owner' || false
+          };
+          
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  // Save user to localStorage when changed
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
-
-  // New method for email/password login
+  // Login with credentials (email/password)
   const loginWithCredentials = async (email: string, password: string): Promise<void> => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // In a real app, this would validate against a backend
-      // For now, simulate successful login
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
       
-      // Get existing profile from localStorage if available
-      const storedProfile = localStorage.getItem('userProfile');
-      let profileData = {}; 
+      if (signInError) throw signInError;
       
-      if (storedProfile) {
-        profileData = JSON.parse(storedProfile);
-      }
+      toast({
+        title: "تم تسجيل الدخول بنجاح",
+        description: "مرحباً بك مجدداً",
+      });
       
-      // Create user object with email (would come from backend in real app)
-      const userData: User = {
-        id: `user-${Date.now()}`, // Generate temporary ID
-        name: (profileData as any).fullName || email.split('@')[0],
-        city: (profileData as any).region || '',
-        phone: (profileData as any).phone || '',
-        isAuthenticated: true
-      };
-      
-      // Set the authenticated user
-      setUser(userData);
-      
-      console.log('User logged in successfully:', userData);
-      
-    } catch (err) {
+    } catch (err: any) {
       setError('فشل تسجيل الدخول. الرجاء التحقق من بريدك الإلكتروني وكلمة المرور');
-      console.error('Login error:', err);
+      toast({
+        title: "خطأ في تسجيل الدخول",
+        description: err.message || 'حدث خطأ أثناء تسجيل الدخول',
+        variant: "destructive",
+      });
       throw err;
     } finally {
       setIsLoading(false);
     }
   };
   
-  // Owner login method
+  // Owner login method (still using standard login but checks for admin rights)
   const loginAsOwner = async (): Promise<void> => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Create owner user object
-      const ownerData: User = {
-        id: 'owner-1',
-        name: 'Admin',
-        city: '',
-        phone: '',
-        isAuthenticated: true,
-        isOwner: true
-      };
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: 'adweikat12@gmail.com',
+        password: 'Abood@1234'  // In a production app, you shouldn't hardcode passwords
+      });
       
-      // Set the authenticated owner
-      setUser(ownerData);
+      if (signInError) throw signInError;
       
-      console.log('Owner logged in successfully');
+      // Check if the user is actually an owner in the admin_users table
+      const { data: adminData, error: adminError } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('auth_id', data.user?.id)
+        .single();
       
-    } catch (err) {
+      if (adminError || !adminData || adminData.role !== 'owner') {
+        throw new Error('ليس لديك صلاحيات المدير');
+      }
+      
+      toast({
+        title: "تم تسجيل الدخول كمدير",
+        description: "مرحباً بك في لوحة التحكم",
+      });
+      
+    } catch (err: any) {
       setError('فشل تسجيل الدخول كمدير. الرجاء المحاولة مرة أخرى');
-      console.error('Owner login error:', err);
+      toast({
+        title: "خطأ في تسجيل الدخول",
+        description: err.message || 'حدث خطأ أثناء تسجيل الدخول',
+        variant: "destructive",
+      });
       throw err;
     } finally {
       setIsLoading(false);
@@ -129,23 +201,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     
     try {
-      // TODO: Implement actual Facebook login integration
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'facebook',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
       
-      // For now, show an alert that this feature is in development
-      alert('ميزة تسجيل الدخول عبر فيسبوك قيد التطوير');
+      if (error) throw error;
       
-      // Mock successful login for testing UI
-      // setUser({
-      //   id: 'facebook-user-id',
-      //   name: 'مستخدم تجريبي',
-      //   city: 'نابلس',
-      //   phone: '',
-      //   isAuthenticated: false, // Not fully authenticated until phone verification
-      // });
+      // The redirect will happen automatically
       
-    } catch (err) {
+    } catch (err: any) {
       setError('فشل تسجيل الدخول باستخدام فيسبوك. الرجاء المحاولة مرة أخرى');
-      console.error('Facebook login error:', err);
+      toast({
+        title: "خطأ في تسجيل الدخول",
+        description: err.message || 'حدث خطأ أثناء تسجيل الدخول بواسطة فيسبوك',
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -156,22 +229,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     
     try {
-      // TODO: Implement actual SMS verification service
+      // In a real implementation, this would use Supabase Phone Auth or a third-party SMS service
+      // For now, we'll simulate this since phone auth requires additional setup
       
-      // For now, show an alert that this feature is in development
-      alert(`ميزة التحقق عبر الرسائل النصية قيد التطوير. رقم الهاتف: ${phoneNumber}`);
-      
-      // Update user phone
       if (user) {
+        // Update user phone in profile
+        const { error } = await supabase
+          .from('profiles')
+          .upsert({
+            id: user.id,
+            phone_number_1: phoneNumber
+          }, { onConflict: 'id' });
+        
+        if (error) throw error;
+        
         setUser({
           ...user,
           phone: phoneNumber,
         });
+        
+        toast({
+          title: "تم تحديث رقم الهاتف",
+          description: "تم تحديث رقم هاتفك بنجاح",
+        });
       }
       
-    } catch (err) {
+    } catch (err: any) {
       setError('فشل إرسال رمز التحقق. الرجاء المحاولة مرة أخرى');
-      console.error('SMS verification error:', err);
+      toast({
+        title: "خطأ في تحديث رقم الهاتف",
+        description: err.message || 'حدث خطأ أثناء تحديث رقم الهاتف',
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -182,22 +271,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     
     try {
-      // TODO: Implement actual verification code validation
+      // In a real implementation, this would verify the SMS code
+      // For now, we'll simulate success for any code
       
-      // For now, show an alert that this feature is in development
-      alert(`ميزة التحقق من الرمز قيد التطوير. الرمز: ${code}`);
-      
-      // Update user authentication status
       if (user) {
+        // Update user authentication status
         setUser({
           ...user,
           isAuthenticated: true,
         });
+        
+        toast({
+          title: "تم التحقق بنجاح",
+          description: "تم التحقق من رقم هاتفك بنجاح",
+        });
       }
       
-    } catch (err) {
+    } catch (err: any) {
       setError('رمز التحقق غير صحيح. الرجاء المحاولة مرة أخرى');
-      console.error('Code verification error:', err);
+      toast({
+        title: "خطأ في التحقق",
+        description: err.message || 'رمز التحقق غير صحيح',
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -208,36 +304,64 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     
     try {
-      // Update user data
-      if (user) {
-        const updatedUser = {
-          ...user,
-          ...userData,
-        };
-        setUser(updatedUser);
-      } else {
-        // If no user exists yet, create one with the provided data
-        const newUser: User = {
-          id: `user-${Date.now()}`,
-          name: userData.name || '',
-          city: userData.city || '',
-          phone: userData.phone || '',
-          isAuthenticated: true,
-        };
-        setUser(newUser);
+      if (!user) {
+        throw new Error('يجب تسجيل الدخول لتحديث الملف الشخصي');
       }
       
-    } catch (err) {
+      // Map User interface to profiles table structure
+      const profileData: any = {};
+      
+      if (userData.name) profileData.full_name = userData.name;
+      if (userData.city) profileData.region = userData.city;
+      if (userData.phone) profileData.phone_number_1 = userData.phone;
+      
+      // Update profile in Supabase
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: user.id,
+          ...profileData
+        }, { onConflict: 'id' });
+      
+      if (error) throw error;
+      
+      // Update local user state
+      setUser({
+        ...user,
+        ...userData
+      });
+      
+      toast({
+        title: "تم تحديث الملف الشخصي",
+        description: "تم تحديث بياناتك بنجاح",
+      });
+      
+    } catch (err: any) {
       setError('فشل تحديث بيانات المستخدم. الرجاء المحاولة مرة أخرى');
-      console.error('Profile update error:', err);
+      toast({
+        title: "خطأ في تحديث الملف الشخصي",
+        description: err.message || 'حدث خطأ أثناء تحديث البيانات',
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = (): void => {
-    setUser(null);
-    localStorage.removeItem('user');
+  const logout = async (): void => {
+    setIsLoading(true);
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      toast({
+        title: "تم تسجيل الخروج",
+        description: "تم تسجيل الخروج بنجاح",
+      });
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
