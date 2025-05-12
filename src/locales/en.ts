@@ -73,9 +73,8 @@ const en = {
   contactInfo: 'Contact Information',
   phoneNumbers: 'Phone Numbers',
   emailAddress: 'Email Address',
-  address: 'Address',
-  followUs: 'Follow Us On',
   location: 'Nablus, Palestine',
+  followUs: 'Follow Us On',
   
   // Product Card
   addToCart: 'Add to Cart',
