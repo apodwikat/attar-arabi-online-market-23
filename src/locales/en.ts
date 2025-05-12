@@ -1,3 +1,4 @@
+
 const en = {
   // General
   appName: 'Al-Attar Al-Arabi',
@@ -67,10 +68,9 @@ const en = {
   customDonateBtn: 'Custom Donation',
   
   // Contact Section
-  contactUs: 'Contact Us',
   contactUsTitle: 'Contact Us',
   contactUsDescription: 'We are here to answer all your inquiries and assist you with anything you need. Feel free to reach out to us through any of the following contact methods.',
-  contactInformation: 'Contact Information',
+  contactInfo: 'Contact Information',
   phoneNumbers: 'Phone Numbers',
   emailAddress: 'Email Address',
   address: 'Address',

@@ -1,3 +1,4 @@
+
 const ar = {
   // General
   appName: 'العطار العربي',
@@ -98,15 +99,13 @@ const ar = {
   ownerLoginSuccessDescription: 'مرحبًا بك في لوحة تحكم المدير',
   
   // Contact Section
-  contactUs: 'اتصل بنا',
   contactUsTitle: 'اتصل بنا',
   contactUsDescription: 'نحن هنا للإجابة على جميع استفساراتكم ومساعدتكم في كل ما تحتاجون. لا تترددوا في التواصل معنا عبر أي من وسائل الاتصال التالية.',
-  contactInformation: 'معلومات التواصل',
+  contactInfo: 'معلومات التواصل',
   phoneNumbers: 'أرقام الهاتف',
   emailAddress: 'البريد الإلكتروني',
-  address: 'العنوان',
-  followUs: 'تابعنا على',
   location: 'نابلس، فلسطين',
+  followUs: 'تابعنا على',
   
   // Form Validations
   invalidEmail: 'الرجاء إدخال بريد إلكتروني صحيح',
